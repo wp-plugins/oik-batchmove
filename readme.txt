@@ -12,6 +12,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 This plugin enables you to filter posts in a particular category and then apply mass updates to selected posts.
 
 Actions supported:
+
 * Update to selected category - Delete the currently filtered category and set a new Target Category for the selected posts
 * Add selected category - Adds the Target Category to the selected posts
 * Delete selected category - Deletes the currently filtered category from the selected posts
