@@ -61,7 +61,7 @@ Before developing oik-batchmove I tried these plugins. They didn't satisfy the r
 * [Bulk Move](http://wordpress.org/plugins/bulk-move/)
 
 == Screenshots ==
-1. Selection criteria. Choose the posts to alter
+1. Selection criteria: Choose the posts to alter
 2. Selected posts
 3. Target category and Action
 4. Result reporting
