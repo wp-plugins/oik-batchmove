@@ -19,14 +19,46 @@ Actions supported:
 * Republish - update the post date to the current time stamp.
 * Republish - alter the post date by adding or subtracting defined amounts
 
-This plugin was sponsored by Howard Popeck for Our Listeners Club - for the music loving audiophile
 
 == Installation ==
 1. Upload the contents of the oik-batchmove plugin to the `/wp-content/plugins/oik-batchmove' directory
 1. Activate the oik-batchmove plugin through the 'Plugins' menu in WordPress
 1. Visit Posts > Batch move or Oik options > Batch move to start changing post's categories or publication dates.
 
+
+== Frequently Asked Questions ==
+= How do I use it? = 
+1. Visit Posts > Batch move
+1. Use the Selection criteria to list the posts you may want to alter and click on Filter.
+1. Select the posts to change.
+1. Select the target category, choose the Action to perform, click on Apply changes.
+
+
+= oik-batchmove may not be fully functional =
+I get a message that says:
+*oik-batchmove may not be fully functional*. Please install and activate the required version of this plugin: oik version 2.0
+
+This message is asking you to install and activate the oik base plugin. There should be a link:
+ 
+* Install oik - this means that oik is not installed. Click on the link to download the latest version of oik
+* Activate oik base plugin - this means that the oik base plugin is not activated. Click on the link to activate the installed version of oik
+* Upgrade oik - this means that the activated version of oik is not at or higher than the required level. Click on the link to update to the latest version of oik
+
+If you do not perform the action then the plugin won't work properly.
+
+= Why do I need oik? =
+The oik base plugin provides APIs (Application Programming Interfaces) which deliver 90% of the functionality that makes this plugin work.
+oik provides a lot of stuff, which is mostly dormant until you really need it.
+
+= Which version of oik do I need? =
 The oik-batchmove plugin is dependent upon oik (v2.0 or higher) for date filter logic
+
+= Are there similar plugins? = 
+Yes. This plugin was sponsored by Howard Popeck for Our Listeners Club - for the music loving audiophile
+Before developing oik-batchmove I tried these plugins. They didn't satisfy the requirements. 
+
+* [Batch-Move wp plugin](http://wordpress.org/plugins/batchmove/)
+* [Bulk Move](http://wordpress.org/plugins/bulk-move/)
 
 == Screenshots ==
 1. Selection criteria. Choose the posts to alter
