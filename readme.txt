@@ -1,9 +1,9 @@
 === oik-batchmove ===
 Contributors: bobbingwide
 Donate link: http://www.oik-plugins.com/oik/oik-donate/
-Tags: category, republish, add, update, delete
+Tags: category, republish, add, update, delete, scheduled republish
 Requires at least: 3.5.1
-Tested up to: 3.6.1
+Tested up to: 3.8.1
 Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,6 +19,8 @@ Actions supported:
 * Republish - update the post date to the current time stamp.
 * Republish - alter the post date by adding or subtracting defined amounts
 
+For version 2.0, oik batchmove also supports Scheduled republishing using WordPress CRON
+
 
 == Installation ==
 1. Upload the contents of the oik-batchmove plugin to the `/wp-content/plugins/oik-batchmove' directory
@@ -32,6 +34,47 @@ Actions supported:
 1. Use the Selection criteria to list the posts you may want to alter and click on Filter.
 1. Select the posts to change.
 1. Select the target category, choose the Action to perform, click on Apply changes.
+
+= How do I use scheduled republishing? =
+To enable scheduled republishing:
+1. Activate the oik-batchmove plugin
+1. Visit oik options > Scheduled republish to enter the settings you want to use.
+1. Ensure Activated? is checked
+1. Click on Update
+
+This will enable the WordPress CRON scheduling to perform scheduled republishing on a daily basis.
+
+
+To disable scheduled republishing:
+1. With the oik-batchmove plugin activated
+1. Visit oik options > Scheduled republish
+1. Ensure Activated? is unchecked
+1. Click on Update
+
+This will stop the WordPress CRON scheduling from performing scheduled republishing.
+
+= How do I see what's going to be republished? =
+The "Reposts for today" box shows the posts that have not yet been republished.
+When Scheduled republish is not activated then this will list the posts that were published on the date determined by applying "look back" to the current date.
+When Scheduled republish is activated you would not expect to see any posts until you change the "look back" value.
+
+The "Reposts for tomorrow" box shows you the posts that may be republished in the next scheduled invocation.
+
+= How do I see what's been republished? =
+The "Rescheduled posts" box lists posts with a post date of ( today - "look back" + "reschedule" )
+If you use the default values '-450 days' and '+451 days' this would be the posts scheduled for publishing tomorrow.
+If you find a post that you don't want republished then you may want to edit or delete it. 
+
+= My time zone is not GMT (UTC+0)=
+This scenario has not been tested.
+
+= How can I exclude posts? =
+@TODO This is a planned feature
+
+= Will my posts be re-publicized to Facebook and Twitter? =
+Yes. That's the plan. 
+We're currently testing with Jetpack publicize.
+Let us know which other social media sharing/publicize plugins you want supported.
 
 
 = oik-batchmove may not be fully functional =
@@ -55,10 +98,12 @@ The oik-batchmove plugin is dependent upon oik (v2.0 or higher) for date filter 
 
 = Are there similar plugins? = 
 Yes. This plugin was sponsored by Howard Popeck for Our Listeners Club - for the music loving audiophile
-Before developing oik-batchmove I tried these plugins. They didn't satisfy the requirements. 
+Before developing oik-batchmove I tried these plugins. They didn't satisfy the original requirements. 
 
 * [Batch-Move wp plugin](http://wordpress.org/plugins/batchmove/)
 * [Bulk Move](http://wordpress.org/plugins/bulk-move/)
+
+I'm not aware of any other plugins that perform Scheduled republishing logic.
 
 == Screenshots ==
 1. Selection criteria: Choose the posts to alter
@@ -66,8 +111,23 @@ Before developing oik-batchmove I tried these plugins. They didn't satisfy the r
 3. Target category and Action
 4. Result reporting
 5. Redisplaying a republished post
+6. Scheduled republish options
+7. Reposts for today - BEFORE scheduled publish has run. e.g. when scheduled processing not activated
+8. Reposts for tomorrow - a look ahead to posts that will be republished tomorrow
+9. Rescheduled posts and CRON - when no posts are scheduled for tomorrow
+10. Rescheduled posts - posts which are scheduled for publishing tomorrow
+11. CRON box - showing next scheduled time and information for the most recent run
 
 == Upgrade Notice ==
+= 2.0 =
+Now dependent upon oik v2.1
+
+= 2.0-beta.0107 =
+Version on oik-plugins sites is dependent upon oik v2.1-beta
+
+= 2.0-alpha.1218 =
+New version with "Scheduled republish" capability. Once again sponsored by Howard Popeck
+
 = 1.0 =
 First version for WordPress.org. Dependent upon oik v2.0 and above
 
@@ -86,6 +146,21 @@ The date filter logic is dependent upon oik v1.18 or higher.
 This plugin is dependent upon the oik base plugin v1.17
 
 == Changelog ==
+= 2.0 =
+* Changed: New option "reschedule_time" allows you to set the publishing time to a fixed time. e.g. 09:00:00. Defaults to republishing with the original time.
+* Changed: post_gmt_date also adjusted in manual republish
+
+= 2.0-beta.0107 =
+* Fixed: problem with missing/duplicate function bw_update_option() 
+* Tested: with WordPress 3.8
+* Added: screen captures for Scheduled republish
+
+= 2.0-alpha.1218 = 
+* Added: 'Scheduled republish' capability with its own admin page and WordPress CRON scheduling
+* Changed: Now displays comment count on the Batch move page
+* Changed: Posts > Batch move is now available to users with 'manage_categories' capability
+* Changed: bw_date_adjust() function moved to oik-batchmove.php
+
 = 1.0 =
 * Changed: Removed call to oik_register_plugin_server() for publication on WordPress.org
 

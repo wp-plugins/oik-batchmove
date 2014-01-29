@@ -1,11 +1,16 @@
-<?php
+<?php // (C) Copyright Bobbing Wide 2013,2014
 
 /**
- * Implement "oik_admin_menu" filter for oik-batchmove 
+ * Implement "oik_admin_menu" for oik-batchmove 
+ *
+ * Note: User must have "manage_options" or "manage_categories" capability to be able to use this function.
  */
 function oik_batchmove_lazy_admin_menu() {
   add_submenu_page( 'oik_menu', 'oik batchmove', 'Batch move', 'manage_options', 'oik_batchmove', 'oik_batchmove_do_page' );
-  add_posts_page( "Batch move", "Batch move", 'manage_options', "oik_batchmove", "oik_batchmove_do_page");
+  add_posts_page( "Batch move", "Batch move", 'manage_categories', "oik_batchmove", "oik_batchmove_do_page");
+  
+  register_setting( 'bw_scheduled', 'bw_scheduled', 'oik_plugins_validate' ); // No validation for oik-batchmove ?
+  add_submenu_page( 'oik_menu', 'oik scheduled republish', 'Scheduled republish', 'manage_options', 'oik_batchmove_scheduled', 'oik_batchmove_scheduled_page' );
 }
 
 /**
@@ -20,6 +25,14 @@ function oik_batchmove_do_page() {
   oik_box( null, null, "Usage notes", "oik_batchmove_usage_notes" );
   oik_menu_footer();
   bw_flush();
+}
+
+/**
+ * Implement scheduled batchmove page 
+ */
+function oik_batchmove_scheduled_page() {
+  oik_require( "admin/oik-batchmove-cron.php", "oik-batchmove" );
+  oik_batchmove_lazy_scheduled_page();
 }
 
 /**
@@ -250,38 +263,12 @@ function bw_array_unset_value( $array, $value ) {
 }
 
 /**
- * Adjust a date using PHP's date_add() function 
- *
- * This function can be used to apply date adjustments such as
- *
- * <pre>
- * +1 year
- * +1 year 6 months
- * +2 years
- * </pre>
- *
- * @use date_interval_create_from_date_string() (PHP 5.3 and above)
- * 
- * @link http://uk3.php.net/manual/en/datetime.formats.relative.php 
- *
- * @param string $adjustment - the date adjustment to apply
- * @param string $date - date to adjust
- * @param string $format - the required format for the new date
- * @return string the new date
- */
-if( !function_exists( "bw_date_adjust" ) ) {
-function bw_date_adjust( $adjustment="1 year", $date=null, $format='Y-m-d' ) {
-  $adate = date_create( $date );
-  date_add( $adate, date_interval_create_from_date_string( $adjustment ));
-  return( date_format( $adate, $format ) );
-}
-}
-
-/**
  * Perform republish for a selected post
  * @param integer $id - ID of the post to be republished
  * 
  * Note that this function pays no attention to comments. It's a quick and dirty republish.
+ * Q: Do we have to alter post_date_gmt ? 
+ * A: Yes, as we have now discovered with scheduled batchmove
  * 
  */
 function oik_batchmove_perform_republish( $id ) {
@@ -291,11 +278,12 @@ function oik_batchmove_perform_republish( $id ) {
   if ( $date_adjustment ) {
     $post = get_post( $id, ARRAY_A ); 
     $post['post_date'] = bw_date_adjust( $date_adjustment, $post['post_date'], "Y-m-d H:i:s" ); 
-    // Do we have to alter post_date_gmt ? 
     e( "New post date: " . $post['post_date'] ); 
   } else {
     $post['post_date'] = bw_format_date( null, "Y-m-d H:i:s" ); 
+    
   }
+  $post['post_date_gmt'] = $post['post_date'];
   wp_update_post( $post );
 }
 
@@ -414,6 +402,7 @@ function oik_batchmove_display_header() {
   th( "ID" );
   th( "Pub. Date" );
   th( "Title" );
+  th( "Comments" );
   etag( "tr" );
   etag( "thead");
 }
@@ -449,6 +438,7 @@ function oik_batchmove_display_post( $post ) {
   td( $link );
   td( $post->post_date );
   td( $post->post_title );
+  td( $post->comment_count );
   etag( "tr" );
 } 
 
