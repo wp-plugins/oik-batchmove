@@ -3,7 +3,7 @@ Contributors: bobbingwide
 Donate link: http://www.oik-plugins.com/oik/oik-donate/
 Tags: category, republish, add, update, delete, scheduled republish
 Requires at least: 3.7.1
-Tested up to: 3.9-RC1
+Tested up to: 3.9
 Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -130,7 +130,7 @@ I'm not aware of any other plugins that perform Scheduled republishing or Catego
 
 == Upgrade Notice ==
 = 2.1 = 
-Requires oik-fields for "Do not republish" capability. Tested with WordPress 3.9-RC1
+Requires oik-fields for "Do not republish" capability. Tested with WordPress 3.9
 
 = 2.0 =
 Now dependent upon oik v2.1
@@ -160,7 +160,7 @@ This plugin is dependent upon the oik base plugin v1.17
 
 == Changelog ==
 = 2.1 =
-* Tested: With WordPress 3.9-RC1 
+* Tested: With WordPress 3.9 
 
 = 2.1-alpha.0221 = 
 * Fixed: Category republish was selecting the wrong posts to republish.
