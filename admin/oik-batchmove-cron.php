@@ -568,6 +568,7 @@ function oik_batchmove_log_reposted( $post_date, $posts ) {
  * Note: We look for posts in "future" status, even if the post_date is in the past.
  * When $cat is null we look for all posts, even those marked as "_do_not_reschedule".
  * This will enable the admin user to decide what the value of the flag should be?
+ * When $cat or $tag is not null then we only reschedule one post.
  
  * @TODO Enhance UI to allow setting of this field.
  *
@@ -593,6 +594,7 @@ function oik_batchmove_query_reposts( $post_date, $cat=null, $tag=null ) {
   if ( $cat !== null ) {
     if ( $cat ) {
       $atts['cat'] = $cat;
+      $atts['numberposts'] = 1;
     }  
     $atts['meta_key'] = "_do_not_reschedule";
     $atts['meta_compare'] = "NOT EXISTS"; 
@@ -602,6 +604,7 @@ function oik_batchmove_query_reposts( $post_date, $cat=null, $tag=null ) {
   if ( $tag !== null ) {
     //if ( $tag ) {
       $atts['tag_id'] = $tag;
+      $atts['numberposts'] = 1;
     //}  
     $atts['meta_key'] = "_do_not_reschedule";
     $atts['meta_compare'] = "NOT EXISTS"; 

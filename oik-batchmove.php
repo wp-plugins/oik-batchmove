@@ -2,11 +2,10 @@
 /*
 Plugin Name: oik batchmove
 Plugin URI: http://wordpress.org/extend/plugins/oik-batchmove
-Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-batchmove
 Description: Batch change post categories or published date incl. CRON rescheduling
-Version: 2.1
+Version: 2.2
 Author: bobbingwide
-Author URI: http://www.bobbingwide.com
+Author URI: http://www.oik-plugins.com/author/bobbingwide
 License: GPL2
 
     Copyright 2013, 2014 Bobbing Wide (email : herb@bobbingwide.com )
@@ -102,10 +101,12 @@ function oik_batchmove_activation() {
   static $plugin_basename = null;
   if ( !$plugin_basename ) {
     $plugin_basename = plugin_basename(__FILE__);
-    add_action( "after_plugin_row_" . $plugin_basename, __FUNCTION__ );   
-    require_once( "admin/oik-activation.php" );
+    add_action( "after_plugin_row_oik-batchmove/oik-batchmove.php", "oik_batchmove_activation" );   
+    if ( !function_exists( "oik_plugin_lazy_activation" ) ) { 
+      require_once( "admin/oik-activation.php" );
+    }
   }  
-  $depends = "oik:2.1";
+  $depends = "oik:2.2";
   oik_plugin_lazy_activation( __FILE__, $depends, "oik_plugin_plugin_inactive" );
 }
 
